@@ -31,6 +31,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         Button buttonReg = findViewById(R.id.registerButton);
         buttonReg.setOnClickListener(v -> registerUser());
+        Button buttonLog = findViewById(R.id.loginButton);
+        buttonReg.setOnClickListener(v -> LoginUser());
     }
 
     private void registerUser() {
@@ -65,5 +67,9 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+    private void LoginUser() {
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 }
