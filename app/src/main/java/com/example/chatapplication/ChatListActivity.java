@@ -22,7 +22,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,8 +73,6 @@ public class ChatListActivity extends AppCompatActivity {
             // Cargar las salas de chat
             loadChatRooms();
 
-            // Obtener token de FCM
-            getFCMToken();
         } else {
             // Manejar el caso en que el usuario no esté autenticado
             Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show();
@@ -188,20 +185,6 @@ public class ChatListActivity extends AppCompatActivity {
         builder.show();
     }
 
-    // Método para obtener el token de FCM
-    private void getFCMToken() {
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                        return;
-                    }
-
-                    String token = task.getResult();
-                    Log.d(TAG, "FCM Token: " + token);
-                    // Aquí puedes guardar el token en la base de datos o enviarlo a tu servidor
-                });
-    }
 }
 
 
