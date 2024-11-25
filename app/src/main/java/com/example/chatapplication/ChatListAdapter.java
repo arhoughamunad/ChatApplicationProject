@@ -6,18 +6,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatViewHolder> {
     private Context context;
-    private List<String> chatList;
+    private List<ChatRoom> chatList;
+    private OnItemClickListener onItemClickListener;
 
     // Constructor
-    public ChatListAdapter(Context context, List<String> chatList) {
+    public ChatListAdapter(Context context, List<ChatRoom> chatList) {
         this.context = context;
         this.chatList = chatList;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(ChatRoom chatRoom);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -30,15 +41,14 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
 
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
-        // Obtener el nombre de la sala de chat y configurarlo en el TextView
-        String chatRoomName = chatList.get(position);
-        holder.chatRoomName.setText(chatRoomName);
-
-        // Configurar el clic para navegar a ChatActivity con el nombre de la sala de chat
+        // Obtener el objeto ChatRoom y configurarlo en el TextView
+        ChatRoom chatRoom = chatList.get(position);
+        holder.chatRoomName.setText(chatRoom.getChatName());
+        // Configurar el clic para navegar a ChatActivity con el ID de la sala de chat
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ChatActivity.class);
-            intent.putExtra("chatRoomName", chatRoomName);
-            context.startActivity(intent);
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(chatRoom);
+            }
         });
     }
 

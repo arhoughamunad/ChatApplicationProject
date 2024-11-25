@@ -32,6 +32,16 @@
             android:text="Alan Hougham"
             android:textSize="18sp" />
     </LinearLayout>
+    <!-- Mensaje de no hay chats -->
+    <TextView
+        android:id="@+id/noChatsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No tienes chats aún, crea uno nuevo."
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatListView"

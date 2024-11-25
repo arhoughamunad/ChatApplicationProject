@@ -3,28 +3,25 @@ package com.example.chatapplication;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
-import java.util.logging.SimpleFormatter;
-
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
-
 import com.bumptech.glide.Glide;
 
 // Adaptador personalizado para gestionar una lista de mensajes en un RecyclerView
 public class MessageAdapter extends RecyclerView.Adapter<HolderMessage> {
     // Lista para almacenar los mensajes
-    private List<MsgRec> ListMsg = new ArrayList<>();
+    private List<MsgRec> ListMsg;
     // Contexto de la aplicación
     private Context c;
 
-    // Constructor que recibe el contexto de la aplicación
-    public MessageAdapter(Context c) {
+    // Constructor que recibe el contexto de la aplicación y una lista de mensajes
+    public MessageAdapter(Context c, List<MsgRec> ListMsg) {
         this.c = c;
+        this.ListMsg = ListMsg;
     }
 
     // Método para añadir un mensaje a la lista
@@ -48,14 +45,16 @@ public class MessageAdapter extends RecyclerView.Adapter<HolderMessage> {
         MsgRec message = ListMsg.get(position);
         holder.getUsername().setText(message.getUsername());
 
-        if (!message.getMsg().isEmpty()) {
+        // Verificar si el mensaje no es nulo antes de llamar a isEmpty()
+        if (message.getMsg() != null && !message.getMsg().isEmpty()) {
             holder.getMsg().setText(message.getMsg());
             holder.getMsg().setVisibility(View.VISIBLE);
         } else {
             holder.getMsg().setVisibility(View.GONE); // Oculta el TextView del mensaje
         }
 
-        if (!message.getPictureMsg().isEmpty()) {
+        // Verificar si la URL de la imagen no es nula antes de llamar a isEmpty()
+        if (message.getPictureMsg() != null && !message.getPictureMsg().isEmpty()) {
             holder.getPictureMsg().setVisibility(View.VISIBLE);
             Glide.with(c).load(message.getPictureMsg()).into(holder.getPictureMsg());
         } else {
@@ -64,9 +63,8 @@ public class MessageAdapter extends RecyclerView.Adapter<HolderMessage> {
 
         // Asignar la hora del mensaje al TextView correspondiente
         Long codetime = ListMsg.get(position).getTime();
-        Date d = new Date (codetime);
+        Date d = new Date(codetime);
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a"); // (a) nos da el formato de am o pm
-
         holder.getTime().setText(sdf.format(d));
     }
 
