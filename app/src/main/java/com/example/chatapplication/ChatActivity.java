@@ -137,10 +137,10 @@ public class ChatActivity extends AppCompatActivity {
     private String saveImageToInternalStorage(Bitmap bitmap) {
         ContextWrapper wrapper = new ContextWrapper(getApplicationContext());
         File file = wrapper.getDir("Images", MODE_PRIVATE);
-        file = new File(file, "profile.jpg");
+        String fileName = "image_" + System.currentTimeMillis() + ".jpg";
+        file = new File(file, fileName);
         try {
-            OutputStream stream = null;
-            stream = new FileOutputStream(file);
+            OutputStream stream = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             stream.flush();
             stream.close();

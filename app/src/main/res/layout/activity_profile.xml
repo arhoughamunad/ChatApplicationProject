@@ -29,15 +29,6 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <!-- Descripción del usuario -->
-        <EditText
-            android:id="@+id/descriptionTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:text="Breve descripción del usuario"
-            android:textSize="16sp" />
-
         <Button
             android:id="@+id/ChatButton"
             android:layout_width="match_parent"
